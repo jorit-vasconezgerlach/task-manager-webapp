@@ -8,6 +8,7 @@ window.addEventListener('load', ()=>{
           const elMenu = document.getElementById('menu');
           const elMenuExport = elMenu.querySelector('.export');
           const elMenuImport = elMenu.querySelector('.import');
+          const elMenuClear = elMenu.querySelector('.clear');
           const elMenuFeedback = elMenu.querySelector('.feedback');
           /// form
           const elInput = secCreate.querySelector('[type=text]');
@@ -77,6 +78,9 @@ window.addEventListener('load', ()=>{
                               reader.onerror = (e) => alert(e.target.error.name);
                               reader.readAsText(file);
                     }
+          }
+          elMenuClear.onclick = ()=>{
+                    elList.innerText = '';
           }
           // add input interaction
           elInput.addEventListener('keyup', ()=>{

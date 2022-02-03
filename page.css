@@ -15,6 +15,10 @@
           --text: var(--white);
           --background: var(--black);
 }
+::selection {
+          color: var(--white);
+          background: var(--primary);
+}
 
 /* Main Components */
 body {
@@ -97,9 +101,6 @@ ul li:hover {
 }
 ul li:hover::before {
           width: 100%;
-}
-ul .end {
-          margin-top: 0.8rem;
 }
 
 /* Menu */

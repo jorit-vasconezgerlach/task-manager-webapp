@@ -8,15 +8,35 @@
           <script src="page.js"></script>
 </head>
 <body>
-          <h2>To-Do App</h2>
-          <section id="create">
-                    <input type="text" placeholder="New Task">
-                    <input type="submit">
-          </section>
-          <section id="list">
-                    <ul>
-                              <h4>End of Tasks</h4>
-                    </ul>
-          </section>
+          <header>
+                    <button id="menu">
+                              <div class="burger"></div>
+                              <div class="burger"></div>
+                              <div class="burger"></div>
+                              <div class="items">
+                                        <div class="item export">download</div>
+                                        <div class="item import">import</div>
+                                        <div class="item feedback">feedback</div>
+                                        <div class="item clear">clear</div>
+                              </div>
+                    </button>
+          </header>
+          <main>
+                    <h2>To-Do App</h2>
+                    <section id="create">
+                              <form action="javascript:">
+                                        <div class="taskInput">
+                                                  <input type="text" placeholder="New Task">
+                                                  <svg data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><path id="Rechteck_620" data-name="Rechteck 620" d="M149.37,149.37h0a11.1,11.1,0,0,1,15.72,0L350.64,334.91a11.12,11.12,0,0,1,0,15.72h0a11.13,11.13,0,0,1-15.73,0L149.37,165.09A11.12,11.12,0,0,1,149.37,149.37Z"/><path id="Rechteck_621" data-name="Rechteck 621" d="M149.36,350.63h0a11.12,11.12,0,0,1,0-15.72L334.91,149.37a11.12,11.12,0,0,1,15.72,0h0a11.12,11.12,0,0,1,0,15.72L165.09,350.63A11.11,11.11,0,0,1,149.36,350.63Z"/></svg>
+                                        </div>
+                                        <input type="submit" value="Add">
+                              </form>
+                    </section>
+                    <section id="list">
+                              <ul>
+                                        <span class="end">End of Tasks</span>
+                              </ul>
+                    </section>
+          </main>
 </body>
 </html>

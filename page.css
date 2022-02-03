@@ -1,51 +1,175 @@
+/* Config */
 * {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
           font-family: 'Helvetica Neue', sans-serif;
 }
+:root {
+          /* Colors */
+          --primary: #CA3216;
+          --gray: #444;
+          --black: #000;
+          --white: #fff;
 
+          --text: var(--white);
+          --background: var(--black);
+}
+
+/* Main Components */
 body {
           padding: 60px 5px;
+          color: var(--text);
+          display: flex;
+          justify-content: center;
+          background: var(--background);
+}
+main {
+          width: 100%;
+          max-width: 450px;
           display: flex;
           flex-direction: column;
-          align-items: center;
           gap: 25px;
-          color: #FFF;
-          background: #000;
 }
 
-body * {
-          width: 450px;
-}
-
-#create {
+/* Create Form */
+#create form {
           display: flex;
           flex-direction: column;
           gap: 10px;
 }
+#create .taskInput {
+          position: relative;
+}
+#create .taskInput svg {
+          display: none;
+          top: 50%;
+          right: 5px;
+          height: 25px;
+          width: 25px;
+          transform: translateY(-50%);
+          position: absolute;
+}
 #create input {
           padding: 0.4rem;
+          padding-right: 30px;
+          width: 100%;
           outline: none;
-          border: 1px solid #CA3216;
+          border: 1px solid var(--primary);
           font-size: 1rem;
-          color: #000;
+          color: var(--background);
 }
 #create input[type=submit] {
-          color: #FFF;
-          background: #CA3216;
+          color: var(--text);
+          background: var(--primary);
 }
 
+/* To-Do List */
 ul {
           display: flex;
           flex-direction: column;
           gap: 5px;
 }
 ul li {
+          --thisRotate: 0deg;
+          --thisTransX: 0px;
           padding: 0.8rem;
           list-style: none;
-          border: 1px solid #CA3216;
+          border: 1px solid var(--primary);
+          word-wrap: break-word;
+          position: relative;
+          transform: rotate(var(--thisRotate)) translateX(var(--thisTransX));
+          cursor: pointer;
+}
+ul li::before {
+          content: '';
+          top: 0; left: 0;
+          height: 100%;
+          width: 0%;
+          background: var(--primary);
+          position: absolute;
+          z-index: -1;
+          transition: .2s ease-in-out;
 }
 ul li:hover {
-          background: #CA3216;
+          color: var(--text);
 }
+ul li:hover::before {
+          width: 100%;
+}
+ul .end {
+          margin-top: 0.8rem;
+}
+
+/* Menu */
+#menu {
+          top: 25px; right: 25px;
+          width: 50px; height: 50px;
+          position: fixed;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 4px;
+          background: var(--gray);
+          border: none;
+          cursor: pointer;
+          z-index: 1000;
+}
+#menu .burger {
+          width: 25px; height: 2px;
+          background: var(--text);
+          transition: 0.2s ease-in-out;
+}
+#menu.open .burger:nth-child(2) {
+          opacity: 0;
+}
+#menu.open .burger:nth-child(1) {
+          transform: translateY(7px) rotate(-45deg);
+}
+#menu.open .burger:nth-child(3) {
+          transform: translateY(-5px) rotate(45deg);
+}
+#menu .items {
+          opacity: 0;
+          top: 100%;
+          right: 0;
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          transition: 0.2s ease-in-out;
+}
+#menu.open .items {
+          opacity: 1;
+}
+#menu.open .items .item {
+          margin-top: -1px;
+          padding: 1rem;
+          color: var(--white);
+          text-transform: capitalize;
+          border: 1px solid var(--primary);
+          background: var(--black);
+}
+#menu.open .items .item:hover {
+          background: var(--primary);
+}
+
+#fileImport {
+          top: 50%; left: 50%;
+          width: 95vh; height: 90vh;
+          max-width: 400px; max-height: 600px;
+          position: fixed;
+          border: 1px solid var(--primary);
+          background: var(--black);
+          box-shadow: 0 0 1000px 1000px var(--black);
+          transform: translate(-50%, -50%);
+}
+#fileImport::-webkit-file-upload-button {
+          display: none;
+}
+#fileImport::before {
+          top: 50%; left: 50%;
+          content: 'Upload Your File';
+          position: absolute;
+          transform: translate(-50%, -50%);
+} 

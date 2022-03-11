@@ -22,11 +22,21 @@
 
 /* Main Components */
 body {
-          padding: 60px 5px;
+          padding: 60px 10px;
           color: var(--text);
           display: flex;
           justify-content: center;
           background: var(--background);
+}
+header {
+          content: '';
+          top: 0; right: 0;
+          padding: 46px 10px 0 10px;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+          position: fixed;
+          z-index: 100;
 }
 main {
           width: 100%;
@@ -105,9 +115,7 @@ ul li:hover::before {
 
 /* Menu */
 #menu {
-          top: 25px; right: 25px;
-          width: 50px; height: 50px;
-          position: fixed;
+          width: 46px; height: 46px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -174,4 +182,10 @@ ul li:hover::before {
           content: 'Upload Your File';
           position: absolute;
           transform: translate(-50%, -50%);
-} 
+}
+
+@media screen and (min-width: 500px) {
+          header {
+                    padding: 46px 40px 0 10px;
+          }
+}

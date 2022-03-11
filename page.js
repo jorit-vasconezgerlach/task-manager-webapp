@@ -18,7 +18,11 @@ window.addEventListener('load', ()=>{
           const elList= secList.querySelector('ul');
 
           // Get cookie tasks
-          var taskJSON = getCookie('json').split(',').reverse();
+          if(getCookie('json')) {
+                    var taskJSON = getCookie('json')?.split(',').reverse();
+          } else {
+                    var taskJSON = [];
+          }
 
           // Fill with cookie tasks
           if(taskJSON[0]!="") {
@@ -95,6 +99,9 @@ window.addEventListener('load', ()=>{
           });
 
           function addToList(taskText) {
+                    if(taskText=="") {
+                              return;
+                    }
                     // create element
                     var newVal = taskText;
                     var newEl = document.createElement('li');
@@ -112,7 +119,6 @@ window.addEventListener('load', ()=>{
                     elInput.focus();
                     // set delete element function
                     newEl.addEventListener('click', ()=>{
-                              console.log(newEl);
                               // delete animation
                               newEl.style.transition = '0.2s ease-in-out';
                               newEl.style.setProperty('--thisRotate', '5deg');

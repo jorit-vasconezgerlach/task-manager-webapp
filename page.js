@@ -16,6 +16,17 @@ window.addEventListener('load', ()=>{
           const elSubmit= secCreate.querySelector('[type=submit]');
           /// list
           const elList= secList.querySelector('ul');
+
+          // fill with previous
+          fillListWithArray(getCookie('json').split(',').reverse());
+
+          // consistent save
+          var taskJSON = [];
+          setInterval(()=>{
+                    taskJSON = tasksToArray().toString();
+                    setCookie('json', taskJSON, 30);
+          }, 100);
+
           // clear input field function
           elInputClear.onclick = ()=>{
                     elInput.value = '';
@@ -34,11 +45,7 @@ window.addEventListener('load', ()=>{
           // menu download
           elMenuExport.onclick = ()=>{
                     var tStart = performance.now();
-                    const tasks = Array.from(elList.getElementsByTagName('li'));
-                    const tasksArray = [];
-                    tasks.forEach(task => {
-                              tasksArray.push(task.innerText);
-                    });
+                    const tasksArray = tasksToArray();
                     const blob = new Blob([JSON.stringify(tasksArray)], {type: 'octetstream'});
                     const href = URL.createObjectURL(blob);
                     const a = Object.assign(document.createElement('a'), {
@@ -67,13 +74,7 @@ window.addEventListener('load', ()=>{
                                         i.remove();
                                         const file = e.target.result;
                                         const fileJSON = JSON.parse(file);
-                                        fileJSON.forEach(elText => {
-                                                  if(isInList(elText)) {
-                                                            console.warn("%cAn item was already in list", "font-weight:bold;", elText);
-                                                  } else {
-                                                            addToList(elText);
-                                                  }
-                                        });
+                                        fillListWithArray(fileJSON);
                               };
                               reader.onerror = (e) => alert(e.target.error.name);
                               reader.readAsText(file);
@@ -127,6 +128,25 @@ window.addEventListener('load', ()=>{
                     })
           }
 
+          function fillListWithArray(json) {
+                    json.forEach(elText => {
+                              if(isInList(elText)) {
+                                        console.warn("%cAn item was already in list", "font-weight:bold;", elText);
+                              } else {
+                                        addToList(elText);
+                              }
+                    });
+          }
+
+          function tasksToArray() {
+                    var tasksArray = [];
+                    const tasks = Array.from(elList.getElementsByTagName('li'));
+                    tasks.forEach(task => {
+                              tasksArray.push(task.innerText);
+                    });
+                    return tasksArray;
+          }
+
           function isInList(text) {
                     const tasks = Array.from(elList.getElementsByTagName('li'));
                     for (let i = 0; i < tasks.length; i++) {
@@ -136,4 +156,23 @@ window.addEventListener('load', ()=>{
                     }
                     return false;
           }
+
+          // Set Cookie
+          function setCookie(cName, cValue, expDays) {
+                    let date = new Date();
+                    date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
+                    const expires = "expires=" + date.toUTCString();
+                    document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
+          }
+          // Get Cookie
+          function getCookie(cName) {
+                    const name = cName + "=";
+                    const cDecoded = decodeURIComponent(document.cookie); //to be careful
+                    const cArr = cDecoded .split('; ');
+                    let res;
+                    cArr.forEach(val => {
+                        if (val.indexOf(name) === 0) res = val.substring(name.length);
+                    })
+                    return res;
+              }
 });

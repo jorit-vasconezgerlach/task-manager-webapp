@@ -97,7 +97,8 @@ window.addEventListener('load', ()=>{
           }
           // Clear Menu
           elMenuClear.onclick = ()=>{
-                    elList.innerText = '';
+            elList.innerText = '';
+            cookieSaveTasks();
           }
           // Add button functionality
           elSubmit.addEventListener('click', ()=>{

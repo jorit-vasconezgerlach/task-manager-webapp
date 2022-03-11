@@ -17,15 +17,13 @@ window.addEventListener('load', ()=>{
           /// list
           const elList= secList.querySelector('ul');
 
-          // fill with previous
-          fillListWithArray(getCookie('json').split(',').reverse());
+          // Get cookie tasks
+          var taskJSON = getCookie('json').split(',').reverse();
 
-          // consistent save
-          var taskJSON = [];
-          setInterval(()=>{
-                    taskJSON = tasksToArray().toString();
-                    setCookie('json', taskJSON, 30);
-          }, 100);
+          // Fill with cookie tasks
+          if(taskJSON[0]!="") {
+                    fillListWithArray(taskJSON);
+          }
 
           // clear input field function
           elInputClear.onclick = ()=>{
@@ -114,6 +112,7 @@ window.addEventListener('load', ()=>{
                     elInput.focus();
                     // set delete element function
                     newEl.addEventListener('click', ()=>{
+                              console.log(newEl);
                               // delete animation
                               newEl.style.transition = '0.2s ease-in-out';
                               newEl.style.setProperty('--thisRotate', '5deg');
@@ -123,9 +122,11 @@ window.addEventListener('load', ()=>{
                                                   newEl.style.setProperty('--thisRotate', '0deg');
                                                   // delete element
                                                   elList.removeChild(newEl);
+                                                  cookieSaveTasks();
                                         }, 100);
                               }, 100);
                     })
+                    cookieSaveTasks();
           }
 
           function fillListWithArray(json) {
@@ -174,5 +175,9 @@ window.addEventListener('load', ()=>{
                         if (val.indexOf(name) === 0) res = val.substring(name.length);
                     })
                     return res;
-              }
+          }
+
+          function cookieSaveTasks() {
+                    setCookie('json', tasksToArray().toString(), 30);
+          }
 });

@@ -45,13 +45,16 @@ window.addEventListener('load', ()=>{
           });
 
           // Toggle Menu
+            function toggleMenu() {
+                elMenu.classList.toggle('open');
+                if(elMenu.classList.contains('open')) {
+                    document.getElementsByTagName('main')[0].style.opacity = '0.6';
+                } else {
+                    document.getElementsByTagName('main')[0].style.opacity = '1';
+                }
+            }
           elMenu.onclick = ()=>{
-                    elMenu.classList.toggle('open');
-                    if(elMenu.classList.contains('open')) {
-                              document.getElementsByTagName('main')[0].style.filter = 'blur(2px)';
-                    } else {
-                              document.getElementsByTagName('main')[0].style.filter = 'blur(0px)';
-                    }
+            toggleMenu();
           };
           // Download Button Function
           elMenuExport.onclick = ()=>{

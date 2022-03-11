@@ -4,17 +4,17 @@ window.addEventListener('load', ()=>{
           const secCreate = document.getElementById('create');
           const secList = document.getElementById('list');
           // elements
-          /// menu
+          /// > menu
           const elMenu = document.getElementById('menu');
           const elMenuExport = elMenu.querySelector('.export');
           const elMenuImport = elMenu.querySelector('.import');
           const elMenuClear = elMenu.querySelector('.clear');
           const elMenuFeedback = elMenu.querySelector('.feedback');
-          /// form
+          /// > form
           const elInput = secCreate.querySelector('[type=text]');
           const elInputClear = secCreate.querySelector('svg');
           const elSubmit= secCreate.querySelector('[type=submit]');
-          /// list
+          /// > list
           const elList= secList.querySelector('ul');
 
           // Get cookie tasks
@@ -29,13 +29,22 @@ window.addEventListener('load', ()=>{
                     fillListWithArray(taskJSON);
           }
 
-          // clear input field function
+          // Clear Input Field Button functionality
           elInputClear.onclick = ()=>{
                     elInput.value = '';
                     elInputClear.style.display = 'none';
                     elInput.focus();
           };
-          // menu toggler
+          // Add input interaction (toggle clear button)
+          elInput.addEventListener('keyup', ()=>{
+                    if(elInput.value=='') {
+                              elInputClear.style.display = 'none';
+                    } else {
+                              elInputClear.style.display = 'flex';
+                    }
+          });
+
+          // Toggle Menu
           elMenu.onclick = ()=>{
                     elMenu.classList.toggle('open');
                     if(elMenu.classList.contains('open')) {
@@ -44,7 +53,7 @@ window.addEventListener('load', ()=>{
                               document.getElementsByTagName('main')[0].style.filter = 'blur(0px)';
                     }
           };
-          // menu download
+          // Download Button Function
           elMenuExport.onclick = ()=>{
                     var tStart = performance.now();
                     const tasksArray = tasksToArray();
@@ -62,6 +71,7 @@ window.addEventListener('load', ()=>{
                     var tEnd = performance.now();
                     console.log("Download complected in " + (tStart - tEnd) + " milliseconds.");
           }
+          // Open Import Screen
           elMenuImport.onclick = ()=>{
                     const i = Object.assign(document.createElement('input'), {
                               id:'fileImport',
@@ -82,22 +92,15 @@ window.addEventListener('load', ()=>{
                               reader.readAsText(file);
                     }
           }
+          // Clear Menu
           elMenuClear.onclick = ()=>{
                     elList.innerText = '';
           }
-          // add input interaction
-          elInput.addEventListener('keyup', ()=>{
-                    if(elInput.value=='') {
-                              elInputClear.style.display = 'none';
-                    } else {
-                              elInputClear.style.display = 'flex';
-                    }
-          })
-          // add button click
+          // Add button functionality
           elSubmit.addEventListener('click', ()=>{
                     addToList(elInput.value);
           });
-
+          // Add task to live tasks from a String
           function addToList(taskText) {
                     if(taskText=="") {
                               return;
@@ -134,7 +137,7 @@ window.addEventListener('load', ()=>{
                     })
                     cookieSaveTasks();
           }
-
+          // Fill live tasks with array
           function fillListWithArray(json) {
                     json.forEach(elText => {
                               if(isInList(elText)) {
@@ -144,7 +147,7 @@ window.addEventListener('load', ()=>{
                               }
                     });
           }
-
+          // Convert live tasks to array and return
           function tasksToArray() {
                     var tasksArray = [];
                     const tasks = Array.from(elList.getElementsByTagName('li'));
@@ -153,7 +156,7 @@ window.addEventListener('load', ()=>{
                     });
                     return tasksArray;
           }
-
+          // Test if task is in list (Return Bool)
           function isInList(text) {
                     const tasks = Array.from(elList.getElementsByTagName('li'));
                     for (let i = 0; i < tasks.length; i++) {
@@ -182,7 +185,7 @@ window.addEventListener('load', ()=>{
                     })
                     return res;
           }
-
+          // Function that saves live tasks to Array
           function cookieSaveTasks() {
                     setCookie('json', tasksToArray().toString(), 30);
           }

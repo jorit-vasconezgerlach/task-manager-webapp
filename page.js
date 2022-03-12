@@ -46,8 +46,8 @@ window.addEventListener('load', ()=>{
 
           // Toggle Menu
             function toggleMenu() {
-                elMenu.classList.toggle('open');
-                if(elMenu.classList.contains('open')) {
+                elMenu.classList.toggle('menu');
+                if(elMenu.classList.contains('menu')) {
                     document.getElementsByTagName('main')[0].style.opacity = '0.6';
                 } else {
                     document.getElementsByTagName('main')[0].style.opacity = '1';
@@ -77,11 +77,17 @@ window.addEventListener('load', ()=>{
           // Open Import Screen
           elMenuImport.onclick = ()=>{
                     const i = Object.assign(document.createElement('input'), {
-                              id:'fileImport',
-                              type:'file',
-                              accept: "application/JSON"
+                        id:'fileImport',
+                        type:'file',
+                        accept: "application/JSON"
                     })
                     document.body.appendChild(i);
+                    i.ondragenter = ()=>{
+                        i.style.background = 'var(--primary)';
+                    }
+                    i.ondragleave = ()=>{
+                        i.style.background = 'var(--background)';
+                    }
                     i.onchange = ()=>{
                               const file = i.files[0];
                               let reader = new FileReader();

@@ -51,6 +51,7 @@ main {
 
 input {
           -webkit-appearance: none;
+          border-radius: 0;
           caret-color: var(--primary);
 }
 
@@ -153,14 +154,20 @@ ul li:hover::before {
           background: var(--text);
           transition: 0.2s ease-in-out;
 }
-#menu.open .burger:nth-child(2) {
-          opacity: 0;
-}
-#menu.open .burger:nth-child(1) {
+#menu.close .burger:nth-child(1),
+#menu.menu .burger:nth-child(1) {
           transform: translateY(7px) rotate(-45deg);
 }
-#menu.open .burger:nth-child(3) {
+#menu.close .burger:nth-child(2),
+#menu.menu .burger:nth-child(2) {
+          opacity: 0;
+}
+#menu.close .burger:nth-child(3),
+#menu.menu .burger:nth-child(3) {
           transform: translateY(-5px) rotate(45deg);
+}
+#menu a {
+          text-decoration: none;
 }
 #menu .items {
           top: 100%;
@@ -171,10 +178,10 @@ ul li:hover::before {
           flex-direction: column;
           transition: 0.2s ease-in-out;
 }
-#menu.open .items {
+#menu.menu .items {
           display: flex;
 }
-#menu.open .items .item {
+#menu.menu .items .item {
           margin: -1px -1px 0 0;
           padding: 1rem 3rem;
           color: var(--white);
@@ -182,14 +189,14 @@ ul li:hover::before {
           border: 1px solid var(--black);
           background: var(--gray);
 }
-#menu.open .items .item:hover {
+#menu.menu .items .item:hover {
           background: var(--primary);
 }
 
 #fileImport {
           top: 50%; left: 50%;
-          width: 95vh; height: 90vh;
-          max-width: 400px; max-height: 600px;
+          width: calc(100% - 20px); height: calc(100% - 20px);
+          max-width: 630px; max-height: 630px;
           position: fixed;
           border: 1px dashed var(--primary);
           background: var(--black);

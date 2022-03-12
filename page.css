@@ -194,23 +194,51 @@ ul li:hover::before {
 }
 
 #fileImport {
+          --beforeAnimation: none;
+          --beforeTop: none; --beforeLeft: none;
+          --beforeWidth: 0px; --beforeHeight: 0px;
+          --beforeScale: 1; --beforeOpacity: 1;
+          --beforeTransition: none;
           top: 50%; left: 50%;
-          width: calc(100% - 20px); height: calc(100% - 20px);
+          width: calc(100% - 20px); height: calc(100% - 270px);
           max-width: 630px; max-height: 630px;
           position: fixed;
           border: 1px dashed var(--primary);
           background: var(--black);
           box-shadow: 0 0 1000px 1000px var(--black);
           transform: translate(-50%, -50%);
+          overflow: hidden;
+          cursor: pointer;
+          color: transparent;
+}
+#fileImport::before {
+          content: '';
+          opacity: var(--beforeOpacity);
+          aspect-ratio: 1/1;
+          border-radius: 100%;
+          top: var(--beforeTop); left: var(--beforeLeft);
+          /* width: var(--afterWidth); */
+          height: var(--beforeHeight);
+          background: #CA3216;
+          transition: var(--beforeTransition);
+          position: absolute;
+          scale: var(--beforeScale);
+          transform: translate(-50%, -50%);
+}
+#fileImport::after {
+          width: 100%;
+          padding: 1rem;
+          content: 'Click or Drag to Upload';
+          top: 50%; left: 50%;
+          position: absolute;
+          transform: translate(-50%, -50%);
+          color: var(--white);
+          font-size: 18px;
+          text-align: center;
+          font-weight: 600;
 }
 #fileImport::-webkit-file-upload-button {
           display: none;
-}
-#fileImport::before {
-          top: 50%; left: 50%;
-          content: 'Upload Your File';
-          position: absolute;
-          transform: translate(-50%, -50%);
 }
 
 /* Media Queries break points */

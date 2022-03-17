@@ -217,7 +217,6 @@ ul li:hover::before {
           aspect-ratio: 1/1;
           border-radius: 100%;
           top: var(--beforeTop); left: var(--beforeLeft);
-          /* width: var(--afterWidth); */
           height: var(--beforeHeight);
           background: #CA3216;
           transition: var(--beforeTransition);

@@ -8,13 +8,32 @@
 :root {
           /* Colors */
           --primary: #CA3216;
+          --primaryText: var(--white);
           --gray: #444;
+          --lightGray: #888;
           --black: #111;
           --white: #fff;
+          --whiteSoft: rgb(248, 222, 222);
 
           --text: var(--white);
           --background: var(--black);
+
+          --boxColor: var(--white);
+          --boxBackground: var(--gray);
+          --boxBorder: var(--lightGray);
 }
+
+@media (prefers-color-scheme: light) {
+          :root {
+                    --text: var(--black);
+                    --background: var(--whiteSoft);
+
+                    --boxColor: var(--white);
+                    --boxBackground: var(--lightGray);
+                    --boxBorder: var(--gray);
+          }
+}
+
 ::selection {
           color: var(--white);
           background: var(--primary);
@@ -78,13 +97,14 @@ input {
           padding-right: 30px;
           width: 100%;
           outline: none;
-          border: 1px solid var(--primary);
+          color: var(--black);
           font-size: 1rem;
-          color: var(--background);
+          border: 1px solid var(--primary);
 }
 #create input[type=submit] {
-          color: var(--text);
+          color: var(--primaryText);
           background: var(--primary);
+          cursor: pointer;
 }
 
 /* List */
@@ -116,14 +136,14 @@ ul li::before {
           transition: .2s ease-in-out;
 }
 ul li:hover {
-          color: var(--text);
+          color: var(--primaryText);
 }
 ul li:hover::before {
           width: 100%;
 }
 #list .end {
           font-size: 14px;
-          color: #888;
+          color: var(--lightGray);
 }
 #list .rights {
           display: block;
@@ -131,7 +151,7 @@ ul li:hover::before {
 #list .rights,
 #list .rights * {
           margin-top: 0.6em;
-          color: #444;
+          color: var(--gray);
           font-size: 10px;
           line-height: 1.4em;
 }
@@ -145,13 +165,13 @@ ul li:hover::before {
           align-items: center;
           justify-content: center;
           gap: 4px;
-          background: var(--gray);
+          background: var(--boxBackground);
           border: none;
           cursor: pointer;
 }
 #menu .burger {
           width: 25px; height: 2px;
-          background: var(--text);
+          background: var(--boxColor);
           transition: 0.2s ease-in-out;
 }
 #menu.close .burger:nth-child(1),
@@ -184,10 +204,10 @@ ul li:hover::before {
 #menu.menu .items .item {
           margin: -1px -1px 0 0;
           padding: 1rem 3rem;
-          color: var(--white);
+          color: var(--boxColor);
           text-transform: capitalize;
-          border: 1px solid var(--black);
-          background: var(--gray);
+          border: 1px solid var(--boxBorder);
+          background: var(--boxBackground);
 }
 #menu.menu .items .item:hover {
           background: var(--primary);
@@ -218,7 +238,7 @@ ul li:hover::before {
           border-radius: 100%;
           top: var(--beforeTop); left: var(--beforeLeft);
           height: var(--beforeHeight);
-          background: #CA3216;
+          background: var(--primary);
           transition: var(--beforeTransition);
           position: absolute;
           scale: var(--beforeScale);

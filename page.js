@@ -166,6 +166,7 @@ window.addEventListener('load', ()=>{
                 const file = e.target.result;
                 const fileJSON = JSON.parse(file);
                 fillListWithArray(fileJSON);
+                cookieSaveTasks();
             };
             // read file error
             reader.onerror = (e) => alert(e.target.error.name);
@@ -219,7 +220,7 @@ window.addEventListener('load', ()=>{
                     cookieSaveTasks();
                 }, 100);
             }, 100);
-        })
+        });
         cookieSaveTasks();
     }
     // Fill live tasks with array
@@ -295,7 +296,7 @@ window.addEventListener('load', ()=>{
         let date = new Date();
         date.setTime(date.getTime() + (expirationDay * 24 * 60 * 60 * 1000));
         const expires = "expires=" + date.toUTCString();
-        document.cookie = cookieName + "=" + cookieValue + "; " + expires + "; path=/";
+        document.cookie = cookieName + "=" + encodeURIComponent(cookieValue) + "; " + expires + "; path=/";
     }
     // getCookie : get cookie value
     function getCookie(cookieName) {
@@ -307,5 +308,23 @@ window.addEventListener('load', ()=>{
                 if (val.indexOf(name) === 0) res = val.substring(name.length);
             })
             return res;
+    }
+    function deleteCookie(name, path, domain ) {
+        if( getCookie( name ) ) {
+          document.cookie = name + "=" +
+            ((path) ? ";path="+path:"")+
+            ((domain)?";domain="+domain:"") +
+            ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+        }
+      }
+    function deleteAllCookies() {
+        var cookies = document.cookie.split(";");
+    
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
     }
 });

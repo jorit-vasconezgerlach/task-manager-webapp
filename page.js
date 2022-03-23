@@ -219,6 +219,12 @@ window.addEventListener('load', ()=>{
                 setTimeout(()=>{
                     newEl.style.setProperty('--thisRotate', '0deg');
                     // delete element
+                    toast('Click to restore : ' + ' ' + newEl.textContent, {
+                        callback: ()=>{
+                            addToList(newEl.textContent);
+                            cookieSaveTasks();
+                        }
+                    });
                     elList.removeChild(newEl);
                     cookieSaveTasks();
                 }, 100);
@@ -363,4 +369,29 @@ window.addEventListener('load', ()=>{
             document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
         }
     }
+    function toast(msg, data) {
+        if(document.getElementById('toastMessage')) {
+            document.getElementById('toastMessage').remove();
+        }
+        var toast = Object.assign(document.createElement('div'), {
+            id: 'toast',
+            style: 'bottom: 20px; right: -315px; cursor: pointer; transition: 2s  cubic-bezier(0.25, 0.46, 0.45, 0.94); padding: 15px; width: 300px; max-width: 40%; position: fixed; z-index: 10000; background: #ca3216; color: white; box-shadow: rgba(0, 0, 0, 0.2) 0px 30px 90px;'
+        });
+        toast.id = 'toastMessage';
+        toast.innerText = msg;
+        toast.onclick = ()=>{
+            data['callback']();
+            document.getElementById('toastMessage').remove();
+        }
+        document.body.appendChild(toast);
+        setTimeout(()=>{
+            toast.style.right = '15px';
+            setTimeout(()=>{
+                toast.style.right = '-315px';
+                setTimeout(()=>{
+                    document.body.removeChild(toast);
+                }, 4000)
+            }, 6000)
+        }, 100);
+}
 });

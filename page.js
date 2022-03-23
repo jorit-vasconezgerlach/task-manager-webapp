@@ -15,6 +15,7 @@ window.addEventListener('load', ()=>{
     //# Sections
     const secCreate = document.getElementById('create');
     const secList = document.getElementById('list');
+    const todoListEl = secList.querySelector('ul');
     //# Elements
     ///> menu
     const elMenu = document.getElementById('menu');
@@ -194,11 +195,13 @@ window.addEventListener('load', ()=>{
         // create element
         var newVal = taskText;
         var newEl = document.createElement('li');
+        newEl.draggable = true;
         newEl.textContent = newVal;
         elList.insertBefore(newEl, elList.firstChild);
         // create animation
         newEl.style.transition = '0.2s ease-in-out';
         newEl.style.opacity = 0;
+        newEl.style.position = 'relative';
         newEl.style.setProperty('--thisTransX', '10px');
         setTimeout(()=>{
             newEl.style.setProperty('--thisTransX', '0px');
@@ -207,7 +210,7 @@ window.addEventListener('load', ()=>{
         // focus create input again
         elInput.focus();
         // set delete element function
-        newEl.addEventListener('click', ()=>{
+        newEl.addEventListener('click', e=>{
             // delete animation
             newEl.style.transition = '0.2s ease-in-out';
             newEl.style.setProperty('--thisRotate', '5deg');
@@ -221,7 +224,40 @@ window.addEventListener('load', ()=>{
                 }, 100);
             }, 100);
         });
+        newEl.addEventListener('dragstart', ()=>{
+            newEl.style.opacity = 0.2;
+            newEl.classList.add('dragging');
+        });
+        newEl.addEventListener('dragend', ()=>{
+            newEl.style.opacity = 1;
+            newEl.classList.remove('dragging');
+        });
+        todoListEl.ondragover = e=>{
+            e.preventDefault();
+            const dragging = document.querySelector('.dragging');
+            const afterElement = getDragAfterElement(todoListEl, e.clientY);
+            if(afterElement == null) {
+                todoListEl.appendChild(dragging);
+                cookieSaveTasks();
+            } else {
+                todoListEl.insertBefore(dragging, afterElement);
+                cookieSaveTasks();
+            }
+        }
+
         cookieSaveTasks();
+    }
+    function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+        return draggableElements.reduce((closest, child)=>{
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if(offset < 0 && offset > closest.offset) {
+                return {offset: offset, element: child};
+            } else {
+                return closest;
+            }
+        },  {offset: Number.NEGATIVE_INFINITY}).element;
     }
     // Fill live tasks with array
     function fillListWithArray(json) {
@@ -268,7 +304,7 @@ window.addEventListener('load', ()=>{
             setTimeout(()=>{
                 element.style.setProperty('--beforeTransition', '0.8s ease-in-out');
                 element.style.setProperty('--beforeOpacity', '1');
-                element.style.setProperty('--beforeHeight', '300%');
+                element.style.setProperty('--beforeHeight', 'calc(100vw + 100vh)');
             },1);
         }
         element.ondragleave = ()=>{

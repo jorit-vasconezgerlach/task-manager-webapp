@@ -260,6 +260,10 @@ ul li:hover::before {
           display: none;
 }
 
+.dragging {
+          transform: rotate(1deg);
+}
+
 /* Media Queries break points */
 @media screen and (min-width: 775px) {
           main {
